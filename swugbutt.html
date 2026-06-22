@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Birthday Troll</title>
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+<style>
+body{margin:0;height:100vh;display:flex;justify-content:center;align-items:center;background:url('bg.jpg') center/cover no-repeat;}
+.box{background:#fff;padding:30px;border-radius:25px;width:280px;text-align:center}
+.sticker{width:80px}
+button{padding:10px 20px;border:none;border-radius:15px;cursor:pointer}
+#dumbBox{display:none;position:fixed;top:20px;left:20px;background:#fff;padding:10px 15px;border-radius:15px;cursor:pointer;width:80px;text-align:center}
+</style>
+</head>
+<body>
+<div class="box">
+<img src="sticker.jpg" class="sticker">
+<p>swugbutt open this if ur not gay</p>
+<button id="btn" onclick="nextStep()">click me</button>
+</div>
+
+<div id="dumbBox" onclick="moveTroll()">ur dum</div>
+<audio id="popSound" src="pop.mp3"></audio>
+
+<script>
+let stage=0;
+
+function nextStep(){
+ document.getElementById('btn').style.display='none';
+ document.getElementById('dumbBox').style.display='block';
+}
+
+function moveTroll(){
+ let box=document.getElementById('dumbBox');
+
+ if(stage===0){
+   box.innerHTML='bleh';
+   box.style.top='auto'; box.style.left='auto';
+   box.style.right='20px'; box.style.bottom='20px';
+   stage=1;
+ }
+ else if(stage===1){
+   box.innerHTML='kid';
+   box.style.right='auto'; box.style.left='20px';
+   stage=2;
+ }
+ else if(stage===2){
+   box.innerHTML='stupido';
+   box.style.top='auto'; box.style.left='auto';
+   box.style.right='20px'; box.style.bottom='20px';
+   stage=3;
+ }
+ else{
+   document.getElementById('popSound').play();
+
+   document.body.innerHTML=`
+   <div style="width:100%;height:100vh;display:flex;justify-content:center;align-items:center;position:relative;background:white;">
+     <img src="15.jpg" style="max-width:100%;max-height:100%;">
+   </div>`;
+
+   if (typeof confetti === 'function') {
+      confetti({
+         particleCount:250,
+         spread:180,
+         origin:{y:0.6}
+      });
+
+      setTimeout(()=>{
+         new Audio('celebrate.mp3').play();
+      },100);
+   }
+ }
+}
+</script>
+</body>
+</html>
